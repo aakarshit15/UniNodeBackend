@@ -26,3 +26,18 @@ And then run the project using
 node index.js
 ```
 
+
+## Sample Input and Output
+
+Sample input:
+
+```bash
+Type your text: hello world
+```
+
+Sample output:
+```bash
+7
+1 1 3 2 1 1 1 
+h:1, e:1, l:3, o:2, w:1, r:1, d:1
+```
