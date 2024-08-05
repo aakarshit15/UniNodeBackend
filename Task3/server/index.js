@@ -7,6 +7,7 @@ import patronus from "./patronus.js";
 import house from "./house.js";
 import bodyParser from "body-parser";
 import env from "dotenv";
+import cors from "cors";
 
 env.config();
 
@@ -14,6 +15,10 @@ mongoose.connect(process.env.MONGO_DB_SERVER);
 
 const app = express();
 const port = 3000;
+
+app.use(cors({
+    origin: "http://localhost:5173"
+}))
 
 app.use(bodyParser.urlencoded({extended: true}));
 
