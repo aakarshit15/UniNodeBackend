@@ -11,10 +11,10 @@ const api = "https://hp-api.onrender.com";
 app.get("/characters", async (req, res) => {
     try {
         const response = await axios.get(`${api}/api/characters`);
-        res.status(200).json({reqSuccess: true, reqData: response.data});
+        res.status(200).json({reqSuccess: true, characters: response.data});
     } catch (error) {
         console.error(`Error getting characters: ${error}`);
-        res.status(400).json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
@@ -22,10 +22,10 @@ app.get("/characters", async (req, res) => {
 app.get("/characters/students", async (req, res) => {
     try {
         const response = await axios.get(`${api}/api/characters/students`);
-        res.status(200).json({reqSuccess: true, reqData: response.data});
+        res.status(200).json({reqSuccess: true, students: response.data});
     } catch (error) {
         console.error(`Error getting characters students: ${error}`);
-        res.status(400).json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
@@ -33,10 +33,10 @@ app.get("/characters/students", async (req, res) => {
 app.get("/characters/staff", async (req, res) => {
     try {
         const response = await axios.get(`${api}/api/characters/staff`);
-        res.status(200).json({reqSuccess: true, reqData: response.data});
+        res.status(200).json({reqSuccess: true, staff: response.data});
     } catch (error) {
         console.error(`Error getting characters staff: ${error}`);
-        res.status(400).json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
@@ -44,10 +44,10 @@ app.get("/characters/staff", async (req, res) => {
 app.get("/characters/:house", async (req, res) => {
     try {
         const response = await axios.get(`${api}/api/characters/house/${req.params.house}`);
-        res.status(200).json({reqSuccess: true, reqData: response.data});
+        res.status(200).json({reqSuccess: true, characters: response.data});
     } catch (error) {
         console.error(`Error getting characters house: ${error}`);
-        res.status(400).json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
@@ -55,10 +55,10 @@ app.get("/characters/:house", async (req, res) => {
 app.get("/character/:id", async (req, res) => {
     try {
         const response = await axios.get(`${api}/api/character/${req.params.id}`);
-        res.status(200).json({reqSuccess: true, reqData: response.data});
+        res.status(200).json({reqSuccess: true, character: response.data});
     } catch (error) {
         console.error(`Error getting characters id: ${error}`);
-        res.status(400).json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
@@ -66,11 +66,16 @@ app.get("/character/:id", async (req, res) => {
 app.get("/spells", async (req, res) => {
     try {
         const response = await axios.get(`${api}/api/spells`);
-        res.status(200).json({reqSuccess: true, reqData: response.data});
+        res.status(200).json({reqSuccess: true, spells: response.data});
     } catch (error) {
         console.error(`Error getting spells: ${error}`);
-        res.status(400).json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
+});
+
+// 404 Error
+app.all("*", (req, res) => {
+    res.status(404).send("<h1>404 Error</h1><h2>Page not found.</h2>")
 });
 
 //Listening on port 3000

@@ -22,26 +22,29 @@ app.use(cors({
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Get all students
 app.get("/students", async (req, res) => {
     try {
         const studentDetails = await Student.find();
-        res.json({reqSuccess: true, students: studentDetails});
+        res.status(200).json({reqSuccess: true, students: studentDetails});
     } catch (error) {
         console.error(`Error querying data: ${error}`);
-        res.json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
+// Get a student
 app.get("/student/:id", async (req, res) => {
     try {
         const student = await Student.find({_id: req.params.id});
-        res.json({reqSuccess: true, student: student});
+        res.status(200).json({reqSuccess: true, student: student});
     } catch (error) {
         console.error(`Error searching student: ${error}`);
-        res.json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
+// Create a student
 app.post("/student", async (req, res) => {
     try {
         const studentDetails = {
@@ -56,13 +59,14 @@ app.post("/student", async (req, res) => {
         }
         const newStudent = new Student(studentDetails);
         newStudent.save();
-        res.json({reqSuccess: true});
+        res.status(201).json({reqSuccess: true});
     } catch (error) {
         console.error(`Error inserting data: ${error}`);
-        res.json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
+// Update a student
 app.patch("/student/:id", async (req, res) => {
     try {
         let newStudentData = {};
@@ -70,21 +74,27 @@ app.patch("/student/:id", async (req, res) => {
             newStudentData = {...newStudentData, [key]: value};
         }
         await Student.updateOne({_id: req.params.id}, newStudentData);
-        res.json({reqSuccess: true});
+        res.status(201).json({reqSuccess: true});
     } catch (error) {
         console.error(`Error updating data: ${error}`);
-        res.json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
 });
 
+// Delete a student
 app.delete("/student/:id", async (req, res) => {
     try {
         const student = await Student.findOneAndDelete({_id: req.params.id});
-        res.json({reqSuccess: true, student: student});
+        res.status(200).json({reqSuccess: true, student: student});
     } catch (error) {
         console.error(`Error deleting student: ${error}`);
-        res.json({reqSuccess: false, reqErrMsg: error});
+        res.status(500).json({reqSuccess: false, reqErrMsg: error});
     }
+});
+
+// 404 Error
+app.all("*", (req, res) => {
+    res.status(404).send("<h1>404 Error</h1><h2>Page not found.</h2>")
 });
 
 app.listen(port, () => {

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 
 const CharacterCard = (props) => {
 
+    // useState for DOB
     const[DOB, setDOB] = useState("")
 
+    // adding zeros in dates
+    // Eg: 7/5/2024 => 07/05/2024
     const addZero = (dataItem) => {
         return (`${dataItem}`).length === 1 ? `0${dataItem}` : `${dataItem}`;
     }
 
+    // converting timestamp to date
     const getFullDate = (dateStr) => {
         const d = new Date(dateStr);
         const dDate = addZero(d.getDate());
@@ -16,9 +20,10 @@ const CharacterCard = (props) => {
         return `${dYear}-${dMonth}-${dDate}`
     }
 
-  useEffect(() => {
-    setDOB(getFullDate(props.character.DOB));
-  }, [DOB])
+    // useEffect hook to set DOB
+    useEffect(() => {
+        setDOB(getFullDate(props.character.DOB));
+    }, [DOB])
 
   return (
     <>

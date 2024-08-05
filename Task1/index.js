@@ -10,19 +10,19 @@ inquirer
   ])
   .then((answers) => {
     // Answer
-    const text = answers.text; // answers = {text: <user input>}
+    const text = answers.text;
     let outputs = [];  // to store output for each letter => [{letter: <letter>, occurrences: <occurrences>}, ...]
     let alreadyCounted; // to not repeat a letter in outputs array
     for(let i=0; i<text.length; i++) {
       if(text[i] === " ") {
-        continue; // if space go to next iteration
+        continue; // if space then go to next iteration
       }
       alreadyCounted = false; // initially letter is not counted
-      outputs.forEach((output) => { // inside for each loop to see if letter is counted
+      outputs.forEach((output) => {
         if(output.letter === text[i]) { // if counted then
           output.occurrences++; // increase its occurrence
           alreadyCounted = true; // set alreadyCounted true
-          return; // get out of for each loop
+          return;
         }
       });
       !alreadyCounted && outputs.push({letter: text[i], occurrences: 1}); // if not counted then count it for the first time

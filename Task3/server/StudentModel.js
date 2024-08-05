@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const studentSchema = new mongoose.Schema({
     name: String,
     gender: String,
-    gender: String,
     DOB: Date,
     house: String,
     wand: {

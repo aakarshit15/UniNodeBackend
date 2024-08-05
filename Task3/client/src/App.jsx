@@ -5,13 +5,18 @@ import axios from 'axios';
 
 function App() {
 
+  // useState hook for characters from server
   const [allCharacters, setAllCharacters] = useState([]);
+
+  // useState hook for characters to display
   const [characters, setCharacters] = useState([]);
 
+  // sorting based on alphabetical orders of names
   const sortingCriteria = (a, b) => {
     return a.name < b.name ? -1 : 1;
   }
 
+  // useEffect hokk to fetch data from server
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,12 +34,14 @@ function App() {
     fetchData();
   }, [])
 
+  // useEffect hook for sorting characters from api and displaying it
   useEffect(() => {
     if (document.querySelector("#nameInput").value === "") {
       setCharacters(allCharacters.sort(sortingCriteria));
     }
   }, [characters, allCharacters])
   
+  // handling change in search bar
   const handleChange = async (event) => {
     const searchedName = event.target.value
     let chars = []
